@@ -2,19 +2,7 @@ import {useIsFocused} from '@react-navigation/core';
 import React from 'react';
 import {useEffect} from 'react';
 import {useState} from 'react';
-import {
-  View,
-  Pressable,
-  Text,
-  SafeAreaView,
-  FlatList,
-  Dimensions,
-  StyleSheet,
-  Modal,
-  TouchableOpacity,
-  Image,
-  AsyncStorage,
-} from 'react-native';
+import { View,Pressable, Text, SafeAreaView, FlatList, Dimensions, StyleSheet, Modal, TouchableOpacity, Image, AsyncStorage,} from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 
 import Carousel, {Pagination} from 'react-native-snap-carousel';
@@ -137,8 +125,8 @@ const HomeScreen = ({navigation, route}) => {
               clone2.isLike = !clone2.isLike;
               clone[index] = clone2;
               setFeedList(clone);
+
               console.log('asdaa');
-              <Icon style = {styles.Icon} name='heart-sharp' size={27}/>
 
             }}
           />

@@ -4,9 +4,15 @@ import {View, Pressable, Text, Dimensions, Image, StyleSheet} from 'react-native
 import Carousel, {Pagination} from 'react-native-snap-carousel';
 import Icon from 'react-native-vector-icons/Ionicons';
 
+
+  
+
 const Feed = ({data, onPressIsLike}) => {
   const [activeSlide, setActiveSlide] = useState(0);
   const [lastPress, setLastPress] = useState(0);
+
+  const [liked, setLiked] = useState(false);
+
 
   return (
     <View style={{backgroundColor: 'white'}}>
@@ -100,24 +106,13 @@ const Feed = ({data, onPressIsLike}) => {
           paddingRight: 16,
           
         }}>
-          
-          <View>
-        {/* <Pressable onPress={onPressIsLike} */}
-          {/* <Pressable        
-        style={{marginRight: 8}}
-        onPress = {(onPressIsLike)} > */}
-        <Pressable
+    <View>
+     <Pressable
          style={{marginRight: 8}}
-         onPress = {(onPressIsLike)}>
-
-    {/* <Icon style = {styles.Icon} 
-    name= isLike ? 'ios-heart-outline' : 'heart-sharp' 
-    size={27}/> */}
-           <Icon style = {styles.Icon} name='ios-heart-outline' size={25}/>
-
-    
-        </Pressable>
-        </View>
+         onPress = {() => setLiked((isLiked)  => ! isLiked)}>
+      <Icon style = {styles.Icon} name= {liked ? 'heart' : 'ios-heart-outline'} size={25}/> 
+      </Pressable>
+     </View>
 
 
         {[1].map((inItem, index) => {
@@ -230,7 +225,8 @@ const Feed = ({data, onPressIsLike}) => {
 
 const styles = StyleSheet.create({
   Icon:{
-    width: 30
+    width: 30,
+    
   }
 });
 
