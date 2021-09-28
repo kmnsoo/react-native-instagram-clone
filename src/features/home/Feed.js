@@ -1,22 +1,42 @@
 import React from 'react';
 import {useState} from 'react';
-import {View, Pressable, Text, Dimensions, Image, StyleSheet} from 'react-native';
+import {View, Pressable, Text, Dimensions, Image, StyleSheet, Alert} from 'react-native';
 import Carousel, {Pagination} from 'react-native-snap-carousel';
 import Icon from 'react-native-vector-icons/Ionicons';
+import Header from '../header/Header';
+import Profile from '../Profile/ProfileScreen';
+import TabNavigation from '../tab/TabNavigation';
 
 
-  
-
-const Feed = ({data, onPressIsLike}) => {
+const Feed = ({ data, onPressIsLike, navigation}) => {
   const [activeSlide, setActiveSlide] = useState(0);
   const [lastPress, setLastPress] = useState(0);
-
   const [liked, setLiked] = useState(false);
+  const [bookmarked, setBookmarked] = useState(false);
+  const [modalVisible, setModalVisible] = useState(false);
 
+  const createThreeButtonAlert = () =>
+  Alert.alert(
+    "Alert Title",
+    "My Alert Msg",
+    [
+      {
+        text: "Ask me later",
+        onPress: () => console.log("Ask me later pressed")
+      },
+      {
+        text: "Cancel",
+        onPress: () => console.log("Cancel Pressed"),
+        style: "cancel"
+      },
+      { text: "OK", onPress: () => console.log("OK Pressed") }
+    ]
+  );
 
   return (
     <View style={{backgroundColor: 'white'}}>
       {/*  */}
+      
       <View
         style={{
           flexDirection: 'row',
@@ -35,21 +55,29 @@ const Feed = ({data, onPressIsLike}) => {
             marginRight: 8,
           }}
         />
-        <Pressable
-          style={{flexGrow: 1, flexShrink: 1, justifyContent: 'center', }}
+      
+      <Pressable       
+        style={{flexGrow: 1, flexShrink: 1, justifyContent: 'center', }}
           onPress={() => {
+            navigation.navigate('My');
             console.log('작성자 프로필로 가기');
           }}>
           <Text>{data.name}</Text>
         </Pressable>
+        
         <Pressable
+        style={styles.button} 
           onPress={() => {
+            {createThreeButtonAlert}
             console.log('모달 띄우기');
             setModalVisible(true);
-          }}>
-          <View style={{width: 24, height: 24, backgroundColor: 'pink'}} />
+
+          }}
+         >
+           <Icon style = {styles.Icon} name='ellipsis-horizontal' size={25}/>
         </Pressable>
       </View>
+      
       {/*  */}
       <View
         style={{
@@ -67,6 +95,7 @@ const Feed = ({data, onPressIsLike}) => {
           {activeSlide + 1} / {data.images.length}
         </Text>
       </View>
+     
       <Carousel
         data={data.images}
         renderItem={({item, index}) => {
@@ -75,7 +104,7 @@ const Feed = ({data, onPressIsLike}) => {
               onPress={() => {
                 let delta = new Date().getTime() - lastPress;
                 if (delta < 200) {
-                  onPressIsLike();
+                  setLiked((isLiked)  => ! isLiked)
                 }
                 setLastPress(new Date().getTime());
               }}>
@@ -139,10 +168,12 @@ const Feed = ({data, onPressIsLike}) => {
         {[2].map((inItem, index) => {
           return (
             <View>
+            <View>
             <Pressable 
             style={{marginRight: 8}}
             onPress={() => {
               console.log('DM보내기');
+              navigation.navigate('DMScreen');
             }}>
               {/* <View
                 style={{
@@ -154,6 +185,7 @@ const Feed = ({data, onPressIsLike}) => {
            <Icon style = {styles.Icon} name='ios-paper-plane-outline' size={25}/>
 
             </Pressable>
+            </View>
             </View>
           );
         })}
@@ -186,16 +218,14 @@ const Feed = ({data, onPressIsLike}) => {
         {[1, 2, 3].map((item, index) => {
           if (item == 3) {
             return (
-              <View>
+           <View>
               <Pressable
                 style={{marginLeft: 8}}
-                onPress={() => {
-                  console.log('저장하기??');
-                }}>
-   {/* <View  style={{ width: 24, height: 24, backgroundColor: 'pink', }} /> */}
-         <Icon style = {styles.Icon} name='bookmark-outline' size={25}/>
-              </Pressable>
-              </View>
+                onPress = {() => setBookmarked((isBookmarked)  => ! isBookmarked)}>
+               {/* <Icon style = {styles.Icon} name='bookmark-outline' size={25}/> */}
+             <Icon style = {styles.Icon} name= {bookmarked ? 'bookmark' : 'bookmark-outline'} size={25}/> 
+            </Pressable>
+          </View>
             );
           } else {
             return (

@@ -5,7 +5,7 @@ import Icon from 'react-native-vector-icons/Ionicons';
 
 
 
-const DMScreen = ({navigation}) => {
+const SettingScreen = ({navigation}) => {
     
   return (
     <View
@@ -36,7 +36,7 @@ const DMScreen = ({navigation}) => {
               fontWeight: '600',
               color: '#333',
             }}>
-            DM
+           Setting 
           </Text>
           </View>
         }
@@ -64,4 +64,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default DMScreen;
+export default SettingScreen;

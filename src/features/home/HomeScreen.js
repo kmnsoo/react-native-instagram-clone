@@ -8,14 +8,20 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import Carousel, {Pagination} from 'react-native-snap-carousel';
 import Header from '../header/Header';
 import Feed from './Feed';
-import DM from '../header/DMScreen';
+
+
 
 const HomeScreen = ({navigation, route}) => {
   const [modalVisible, setModalVisible] = useState(false);
   const [feedList, setFeedList] = useState(DATAS);
+  const [liked, setLiked] = useState(false);
 
   const isFocused = useIsFocused();
 
+
+
+
+  
   useEffect(() => {
     if (isFocused) {
       if (route.params?.newFeed) {
@@ -31,37 +37,20 @@ const HomeScreen = ({navigation, route}) => {
 
   const LeftComponent = () => {
     return (
-      // <Text
-      //   style={{
-      //     fontSize: 18,
-      //     fontWeight: '600',
-      //     color: '#333',
-      //   }}>
-      //   Instagram
-      // </Text>
-      <View style = {{flexDirection : 'row'}}>
+      <View style = {{flexDirection : 'row',  }}>
             <View>
               <View>
                <Pressable 
                style={styles.button} 
                  onPress={() => {
-                
-                 }}
-                 
-                 style={{padding: 4, paddingRight: 10}}>
+                         }}
+                 style={{paddingRight: 7, }}> 
                  {/* <View style={{width: 24, height: 24, backgroundColor: 'black'}} /> */}
                  <Icon style = {styles.Icon} name='logo-instagram' size={25}/>
                </Pressable >
              </View>
               </View>
-                 <Text
-               style={{
-                 fontSize: 22,
-                 fontWeight: '600',
-                 color: '#333',
-               }}>
-              Instagram
-             </Text>
+               <Text style={{ fontSize: 22, fontWeight: '600', color: '#333', top: -3}}>Instagram</Text>
              </View>
     );
   };
@@ -71,7 +60,7 @@ const HomeScreen = ({navigation, route}) => {
   const RightComponent = () => {
     return (
       
-      <View style={{flexDirection: 'row'}}>
+      <View style={{flexDirection: 'row', }}>
         <Pressable 
         style={styles.button} 
           onPress={() => {
@@ -84,7 +73,7 @@ const HomeScreen = ({navigation, route}) => {
         <Pressable 
         style={styles.button} 
           onPress={() => {
-            console.log('좋아요 체크');
+            console.log('좋아요 페이지로 이동');
             navigation.navigate('LikeScreen');
           }}
           style={{padding: 7}}>
@@ -93,7 +82,7 @@ const HomeScreen = ({navigation, route}) => {
         <Pressable 
         style={styles.button} 
           onPress={() => {
-            console.log('DM');
+            console.log('DM 페이지로 이동');
             navigation.navigate('DMScreen');
           }}
           style={{padding: 7}}>
@@ -125,10 +114,13 @@ const HomeScreen = ({navigation, route}) => {
               clone2.isLike = !clone2.isLike;
               clone[index] = clone2;
               setFeedList(clone);
+              
+              <Icon style = {styles.Icon} name= {liked ? 'heart' : 'ios-heart-outline'}/> 
 
               console.log('asdaa');
 
             }}
+            navigation = {navigation}
           />
         )}
         onEndReached={() => {
@@ -168,10 +160,11 @@ const styles = StyleSheet.create({
   Icon: {
     width:23,
     marginLeft:-3,
-    
-    
-   
-  
+  },
+  button: {
+    // position :'absolute',
+    // left: 0,
+    // top: 0
   }
 });
 

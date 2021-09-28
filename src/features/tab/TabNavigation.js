@@ -1,9 +1,10 @@
-import {NavigationContainer} from '@react-navigation/native';
 import * as React from 'react';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import HomeScreen from '../home/HomeScreen';
 import SearchScreen from '../search/SearchScreen';
 import ReelsScreen from '../reels/ReelsScreen';
+import ProfileScreen from '../Profile/ProfileScreen';
+
 import Icon from 'react-native-vector-icons/Ionicons';
 import { Button , StyleSheet, TouchableOpacity, Text, View} from "react-native";
 
@@ -40,7 +41,7 @@ const TabNavigation = () => {
         <Icon style={styles.Icon} name='ios-briefcase-outline' size={28} />
       ),
     }}/>
-      <Tab.Screen name="My" component={SearchScreen}
+      <Tab.Screen name="My" component={ProfileScreen}
       options={{
         tabBarLabel: '',
         tabBarIcon: ({ color, size }) => (

@@ -7,8 +7,11 @@ import TabNavigation from './tab/TabNavigation';
 import FeedWriteScreen from './home/FeedWriteScreen';
 import LikeScreen from './header/LikeScreen';
 import DMScreen from './header/DMScreen';
+import DMWriteScreen from './header/DMWriteScreen';
+import Settings  from './Profile/Setting';
+import SettingScreen from './Profile/Setting';
+// import ProfileScreen from './Profile/ProfileScreen';
 
-import {Text} from 'react-native';
 
 const AppNavigation = () => {
   const Stack = createStackNavigator();
@@ -20,6 +23,10 @@ const AppNavigation = () => {
         <Stack.Screen name="FeedWriteScreen" component={FeedWriteScreen} />
         <Stack.Screen name="LikeScreen" component={LikeScreen} />
         <Stack.Screen name="DMScreen" component={DMScreen} />
+        <Stack.Screen name="DMWriteScreen" component={DMWriteScreen} />
+        <Stack.Screen name="Setting" component={SettingScreen} />
+        {/* <Stack.Screen name="ProfileScreen" component={ProfileScreen} /> */}
+
       </Stack.Navigator>
     </NavigationContainer>
   );
