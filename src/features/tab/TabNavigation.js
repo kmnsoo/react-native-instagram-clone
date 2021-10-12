@@ -12,40 +12,41 @@ const TabNavigation = () => {
   const Tab = createBottomTabNavigator();
 
   return (
+    
     <Tab.Navigator screenOptions={{headerShown: false}}>
       <Tab.Screen name="HomeScreen" component={HomeScreen} 
        options={{
         tabBarLabel: '',
         tabBarIcon: ({ color, size }) => (
-          <Icon style={styles.Icon} name='md-home-outline' size={28} />
+          <Icon style={styles.BottomIcon} name='md-home-outline' size={28} />
         ),
       }}/>
       <Tab.Screen name="SearchScreen" component={SearchScreen} 
          options={{
           tabBarLabel: '',
           tabBarIcon: ({ color, size }) => (
-            <Icon style={styles.Icon} name='ios-search-outline' size={28} />
+            <Icon style={styles.BottomIcon} name='ios-search-outline' size={28} />
           ),
         }}/>
        <Tab.Screen name="Reels" component={ReelsScreen} 
      options={{
       tabBarLabel: '',
       tabBarIcon: ({ color, size }) => (
-        <Icon style={styles.Icon} name='ios-caret-forward-circle-outline' size={28} />
+        <Icon style={styles.BottomIcon} name='ios-caret-forward-circle-outline' size={28} />
       ),
     }}/>
       <Tab.Screen name="Shop" component={SearchScreen} 
       options={{
       tabBarLabel: '',
       tabBarIcon: ({ color, size }) => (
-        <Icon style={styles.Icon} name='ios-briefcase-outline' size={28} />
+        <Icon style={styles.BottomIcon} name='ios-briefcase-outline' size={28} />
       ),
     }}/>
       <Tab.Screen name="My" component={ProfileScreen}
       options={{
         tabBarLabel: '',
         tabBarIcon: ({ color, size }) => (
-          <Icon style={styles.Icon} name='person-outline' size={28} />
+          <Icon style={styles.BottomIcon} name='person-outline' size={28} />
         ),
       }}/>
     </Tab.Navigator>
@@ -53,13 +54,10 @@ const TabNavigation = () => {
 };
 const styles = StyleSheet.create({
 
-  Icon: {
-    
-    justifyContent: "center",
+  BottomIcon: {
     alignItems: "center",
-    height: 30,
-    padding: 2
-    
+    top: 1,
+    marginBottom: -10,
   }
 });
 

@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, Pressable, Text, SafeAreaView, BackHandler, StyleSheet} from 'react-native';
+import {View, Pressable, Text, SafeAreaView, BackHandler, StyleSheet, Image} from 'react-native';
 import Header from '../header/Header';
 import Icon from 'react-native-vector-icons/Ionicons';
 
@@ -54,7 +54,11 @@ const DMScreen = ({navigation}) => {
           </View>
         }
       />
+      <View >
+       
+      </View>
     </View>
+   
   );
 };
 

@@ -1,13 +1,18 @@
 import {useIsFocused} from '@react-navigation/core';
-import React from 'react';
-import {useEffect} from 'react';
-import {useState} from 'react';
-import { View,Pressable, Text, SafeAreaView, FlatList, Dimensions, StyleSheet, Modal, TouchableOpacity, Image, AsyncStorage,} from 'react-native';
+import React, {useState, useEffect} from 'react';
+
+import { View,Pressable, Text, SafeAreaView, FlatList, Dimensions, StyleSheet, Modal, TouchableOpacity, Image,} from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 
 import Carousel, {Pagination} from 'react-native-snap-carousel';
 import Header from '../header/Header';
 import Feed from './Feed';
+import GlobalStyle from '../utils/GlobalStyle';
+
+import CustomButton from '../home/CustomButton';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import AppNavigation from '../AppNavigation';
+
 
 
 
@@ -19,9 +24,31 @@ const HomeScreen = ({navigation, route}) => {
   const isFocused = useIsFocused();
 
 
+  // 
+  const [name, setName] = useState('');
+  const [password, setAge] = useState('');
 
+    useEffect(() => {
+      getData();
+  }, []);
 
-  
+const getData = () => {
+  try {
+      AsyncStorage.getItem('UserData')
+          .then(value => {
+              if (value != null) {
+                  let user = JSON.parse(value);
+                  setName(user.Name);
+                  setAge(user.password);
+              }
+          })
+  } catch (error) {
+      console.log(error);
+  }
+}
+
+// 
+
   useEffect(() => {
     if (isFocused) {
       if (route.params?.newFeed) {
@@ -40,17 +67,20 @@ const HomeScreen = ({navigation, route}) => {
       <View style = {{flexDirection : 'row',  }}>
             <View>
               <View>
-               <Pressable 
+               {/* <Pressable 
                style={styles.button} 
                  onPress={() => {
                          }}
                  style={{paddingRight: 7, }}> 
-                 {/* <View style={{width: 24, height: 24, backgroundColor: 'black'}} /> */}
                  <Icon style = {styles.Icon} name='logo-instagram' size={25}/>
-               </Pressable >
+               </Pressable > */}
              </View>
               </View>
-               <Text style={{ fontSize: 22, fontWeight: '600', color: '#333', top: -3}}>Instagram</Text>
+              <Text style={[
+                GlobalStyle.CustomFont,
+                styles.text
+            ]}>
+              Instagram</Text>
              </View>
     );
   };
@@ -97,7 +127,9 @@ const HomeScreen = ({navigation, route}) => {
       style={{
         flex: 1,
       }}>
+        
       <SafeAreaView style={{backgroundColor: 'white'}} />
+
       <Header
         leftComponent={<LeftComponent />}
         rightComponent={<RightComponent />}
@@ -165,7 +197,10 @@ const styles = StyleSheet.create({
     // position :'absolute',
     // left: 0,
     // top: 0
-  }
+  },
+  text: {
+    fontSize: 25, fontWeight: '600', top: -3,
+},
 });
 
 export default HomeScreen;

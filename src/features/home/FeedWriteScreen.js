@@ -1,7 +1,8 @@
 import React, {useState} from 'react';
 import {Pressable, SafeAreaView, Text, TextInput, View} from 'react-native';
 import Header from '../header/Header';
-
+import Icon from 'react-native-vector-icons/Ionicons';
+import {withNavigation} from 'react-navigation'
 const FeedWriteScreen = ({navigation}) => {
   const [content, setContent] = useState('');
 
@@ -14,12 +15,13 @@ const FeedWriteScreen = ({navigation}) => {
             onPress={() => {
               navigation.goBack();
             }}>
-            <Text>뒤로</Text>
+     <Icon style={Icon} name='ios-close' size={25} />
+
           </Pressable>
         }
         centerComponent={
           <View style={{alignItems: 'center'}}>
-            <Text style={{fontSize: 18, fontWeight: 'bold'}}>글쓰기</Text>
+            <Text style={{fontSize: 18, fontWeight: 'bold'}}>새 게시물</Text>
           </View>
         }
         rightComponent={
@@ -28,16 +30,17 @@ const FeedWriteScreen = ({navigation}) => {
               console.log('글 작성');
               navigation.navigate('MainScreen', {
                 screen: 'HomeScreen',
+                // screen: 'My',
                 params: {
                   newFeed: {
-                    name: '신규 글쓴이',
+                    name: '정현구 ㅄ',
                     content: content,
                     images: [
-                      {
-                        url: 'https://via.placeholder.com/500',
+                      {                     
+                        url: 'https://ifh.cc/g/eSlPew.jpg',
                       },
                       {
-                        url: 'https://via.placeholder.com/600',
+                        url: 'https://ifh.cc/g/29KvKf.jpg',
                       },
                       {
                         url: 'https://via.placeholder.com/500',
@@ -55,9 +58,10 @@ const FeedWriteScreen = ({navigation}) => {
                     isLike: false,
                   },
                 },
-              });
+              })
+              
             }}>
-            <Text>작성</Text>
+            <Text style= {{fontWeight : '600'}}>다음</Text>
           </Pressable>
         }
       />

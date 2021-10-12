@@ -1,50 +1,100 @@
     import {useIsFocused} from '@react-navigation/core';
     import React from 'react';
     import {useState} from 'react';
-    import { View, Pressable, Text, SafeAreaView, TextInput, FlatList, Dimensions, AsyncStorage, Image, ScrollView, StyleSheet, Button
+    import { View, Pressable, Text, SafeAreaView, TextInput, FlatList, Dimensions, Image, ScrollView, StyleSheet, Button
     } from 'react-native';
     import {useEffect} from 'react/cjs/react.development';
     import Icon from 'react-native-vector-icons/Ionicons';
     import Header from '../header/Header';
     import { color } from 'react-native-reanimated';
-    import Setting from './Setting'
+    import Feed from '../home/Feed';
+
+    import AsyncStorage from '@react-native-async-storage/async-storage';
+    import CustomButton from '../home/CustomButton';
+
+
+
     const Separator = () => (
       <View style ={styles.Separator} />
     )
 
-
-    const ProfileScreen = ({navigation}) => {
+    const ProfileScreen = ({navigation, route}) => {
+      
       const isFocused = useIsFocused();
       const [tempFeedList, setTempFeedList] = useState([]);
       const [splitList, setSpliList] = useState([]);
+      
+      //
+      const [feedList, setFeedList] = useState(DATAS);
+      useEffect(() => {
+        if (isFocused) {
+          if (route.params?.newFeed) {
+            console.log(route.params.newFeed);
+            setFeedList([route.params.newFeed, ...feedList]);
+          }
+        }
+      }, [isFocused]);
+      useEffect(() => {
+        AsyncStorage.setItem('feedData', JSON.stringify(feedList));
+      }, [feedList]);
+     //
     
+     const [name, setName] = useState('');
+     const [age, setAge] = useState('');
+
+    useEffect(() => {
+        getData();
+    }, []);
+
+    const getData = () => {
+        try {
+            AsyncStorage.getItem('UserData')
+                .then(value => {
+                    if (value != null) {
+                        let user = JSON.parse(value);
+                        setName(user.Name);
+                        setAge(user.Age);
+                    }
+                })
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+  //   const updateData = async () => {
+  //     if (name.length == 0) {
+  //         Alert.alert('Warning!', 'Please write your data.')
+  //     } else {
+  //         try {
+  //             var user = {
+  //                 Name: name
+  //             }
+  //             await AsyncStorage.mergeItem('UserData', JSON.stringify(user));
+  //             Alert.alert('Success!', 'Your data has been updated.');
+  //         } catch (error) {
+  //             console.log(error);
+  //         }
+  //     }
+  // }
+    // 
+
+
       const LeftComponent = () => {
         return (
-          // <Text
-          //   style={{
-          //     fontSize: 18,
-          //     fontWeight: '600',
-          //     color: '#333',
-          //   }}>
-          //   Instagram
-          // </Text>
         <View style = {{flexDirection : 'row'}}>
             <Text
               style={{
               fontSize: 22,
               fontWeight: '600',
               color: '#333', }}>
-              Kmnsoo 
+             {name} 
           </Text>
         </View>
         );
       };
 
-
-
       const RightComponent = () => {
         return (
-          
           <View style={{flexDirection: 'row', alignItems:'center',}}>
             <Pressable 
             style={styles.button} 
@@ -58,20 +108,14 @@
             <Pressable 
             style={styles.button} 
               onPress={() => {
-                console.log('좋아요 페이지로 이동');
-                navigation.navigate('LikeScreen');
-              }}
-            >
+                console.log('Setting 페이지로 이동');
+                navigation.navigate('Setting')
+              }} >
               <Icon style={styles.Icon} name='menu' size={30}/>
-              
             </Pressable>
-
-          </View>
-          
+          </View>  
         );
       };
-
-      
 
       useEffect(async () => {
         if (isFocused) {
@@ -108,23 +152,28 @@
             style={{
               flexDirection: 'row',
               alignItems: 'center',
-              
-              paddingLeft: 15,
-              
+              paddingLeft: 15,      
             }}>
           <View style={{
-            width: 70,
-            height: 70,
-            borderRadius: 60,
-            backgroundColor: 'lightgray',
-            marginRight: 8,  
-            }}/>
+            // width: 70,
+            // height: 70,
+            // borderRadius: 60,
+            // backgroundColor: 'lightgray',
+            // marginRight: 8,
+            }}>
+            <Image 
+            style = {{  width: 70,
+              height: 70,
+              borderRadius: 60,}}
+            source = {require('../header/hg.jpg')}
+            />      
+           </View>  
 
           <View style = {{alignItems : 'center', flexGrow :1 ,flexShrink : 1, paddingLeft: 40, paddingTop: 10}}>    
           <View style = {{flexDirection: 'row',   paddingLeft: 15}}>
             <Text style = {styles.text1}>67</Text>
-            <Text style = {styles.text1}>3335</Text>
-            <Text style = {styles.text1}>466</Text>
+            <Text style = {styles.text1}>13.2M</Text>
+            <Text style = {styles.text1}>142</Text>
           </View>
 
           <View style = {{flexDirection: 'row'}}>
@@ -167,229 +216,32 @@
           </View>
             
           <FlatList
-            data={splitList}
-            showsVerticalScrollIndicator={false}
-            renderItem={({item, index}) => {
-              if (index == 0) {
-                return (
-                  <View style={{flexDirection: 'row'}}>
-                    <View>
-                      <Pressable
-                        onPress={() => {
-                          console.log('글 상세로 들어가야됨');
-                        }}
-                        style={{margin: 1}}>
-                        <View
-                          style={{
-                            width: Dimensions.get('screen').width / 3 - 2,
-                            height: Dimensions.get('screen').width / 3 - 2,
-                            backgroundColor: 'skyblue',
-                          }}>
-                          <Image
-                            style={{
-                              width: Dimensions.get('screen').width / 3 - 2,
-                              height: Dimensions.get('screen').width / 3 - 2,
-                            }}
-                            source={{
-                              uri: item[0].images?.[0].url,
-                            }}
-                          />
-                        </View>
-                      </Pressable>
-                      <Pressable
-                        onPress={() => {
-                          console.log('글 상세로 들어가야됨');
-                        }}
-                        style={{margin: 1}}>
-                        <View
-                          style={{
-                            width: Dimensions.get('screen').width / 3 - 2,
-                            height: Dimensions.get('screen').width / 3 - 2,
-                            backgroundColor: 'skyblue',
-                          }}>
-                          <Image
-                            style={{
-                              width: Dimensions.get('screen').width / 3 - 2,
-                              height: Dimensions.get('screen').width / 3 - 2,
-                            }}
-                            source={{
-                              uri: item[1].images?.[0].url,
-                            }}
-                          />
-                        </View>
-                      </Pressable>
-                    </View>
-                    <Pressable
-                      onPress={() => {
-                        console.log('글 상세로 들어가야됨');
-                      }}
-                      style={{margin: 1}}>
-                      <View
-                        style={{
-                          width: (Dimensions.get('screen').width / 3 - 1) * 2,
-                          height: (Dimensions.get('screen').width / 3 - 1) * 2,
-                          backgroundColor: 'skyblue',
-                        }}>
-                        <Image
-                          style={{
-                            width: (Dimensions.get('screen').width / 3 - 1) * 2,
-                            height: (Dimensions.get('screen').width / 3 - 1) * 2,
-                          }}
-                          source={{
-                            uri: item[2].images?.[0].url,
-                          }}
-                        />
-                      </View>
-                    </Pressable>
-                  </View>
-                );
-              }
-              if (index == 2) {
-                return (
-                  <View style={{flexDirection: 'row'}}>
-                    <Pressable
-                      onPress={() => {
-                        console.log('글 상세로 들어가야됨');
-                      }}
-                      style={{margin: 1}}>
-                      <View
-                        style={{
-                          width: (Dimensions.get('screen').width / 3 - 1) * 2,
-                          height: (Dimensions.get('screen').width / 3 - 1) * 2,
-                          backgroundColor: 'skyblue',
-                        }}>
-                        <Image
-                          style={{
-                            width: (Dimensions.get('screen').width / 3 - 1) * 2,
-                            height: (Dimensions.get('screen').width / 3 - 1) * 2,
-                          }}
-                          source={{
-                            uri: item[0].images?.[0].url,
-                          }}
-                        />
-                      </View>
-                    </Pressable>
-                    <View>
-                      <Pressable
-                        onPress={() => {
-                          console.log('글 상세로 들어가야됨');
-                        }}
-                        style={{margin: 1}}>
-                        <View
-                          style={{
-                            width: Dimensions.get('screen').width / 3 - 2,
-                            height: Dimensions.get('screen').width / 3 - 2,
-                            backgroundColor: 'skyblue',
-                          }}>
-                          <Image
-                            style={{
-                              width: Dimensions.get('screen').width / 3 - 2,
-                              height: Dimensions.get('screen').width / 3 - 2,
-                            }}
-                            source={{
-                              uri: item[1].images?.[0].url,
-                            }}
-                          />
-                        </View>
-                      </Pressable>
-                      <Pressable
-                        onPress={() => {
-                          console.log('글 상세로 들어가야됨');
-                        }}
-                        style={{margin: 1}}>
-                        <View
-                          style={{
-                            width: Dimensions.get('screen').width / 3 - 2,
-                            height: Dimensions.get('screen').width / 3 - 2,
-                            backgroundColor: 'skyblue',
-                          }}>
-                          <Image
-                            style={{
-                              width: Dimensions.get('screen').width / 3 - 2,
-                              height: Dimensions.get('screen').width / 3 - 2,
-                            }}
-                            source={{
-                              uri: item[2].images?.[0].url,
-                            }}
-                          />
-                        </View>
-                      </Pressable>
-                    </View>
-                  </View>
-                );
-              }
-              return (
-                <View style={{flexDirection: 'row'}}>
-                  <Pressable
-                    onPress={() => {
-                      console.log('글 상세로 들어가야됨');
-                    }}
-                    style={{margin: 1}}>
-                    <View
-                      style={{
-                        width: Dimensions.get('screen').width / 3 - 2,
-                        height: Dimensions.get('screen').width / 3 - 2,
-                        backgroundColor: 'skyblue',
-                      }}>
-                      <Image
-                        style={{
-                          width: Dimensions.get('screen').width / 3 - 2,
-                          height: Dimensions.get('screen').width / 3 - 2,
-                        }}
-                        source={{
-                          uri: item[0].images?.[0].url,
-                        }}
-                      />
-                    </View>
-                  </Pressable>
-                  <Pressable
-                    onPress={() => {
-                      console.log('글 상세로 들어가야됨');
-                    }}
-                    style={{margin: 1}}>
-                    <View
-                      style={{
-                        width: Dimensions.get('screen').width / 3 - 2,
-                        height: Dimensions.get('screen').width / 3 - 2,
-                        backgroundColor: 'skyblue',
-                      }}>
-                      <Image
-                        style={{
-                          width: Dimensions.get('screen').width / 3 - 2,
-                          height: Dimensions.get('screen').width / 3 - 2,
-                        }}
-                        source={{
-                          uri: item[1].images?.[0].url,
-                        }}
-                      />
-                    </View>
-                  </Pressable>
-                  <Pressable
-                    onPress={() => {
-                      console.log('글 상세로 들어가야됨');
-                    }}
-                    style={{margin: 1}}>
-                    <View
-                      style={{
-                        width: Dimensions.get('screen').width / 3 - 2,
-                        height: Dimensions.get('screen').width / 3 - 2,
-                        backgroundColor: 'skyblue',
-                      }}>
-                      <Image
-                        style={{
-                          width: Dimensions.get('screen').width / 3 - 2,
-                          height: Dimensions.get('screen').width / 3 - 2,
-                        }}
-                        source={{
-                          uri: item[2].images?.[0].url,
-                        }}
-                      />
-                    </View>
-                  </Pressable>
-                </View>
-              );
+        showsVerticalScrollIndicator={false}
+        data={feedList}
+        renderItem={({item, index}) => (
+          <Feed
+            data={item}
+            onPressIsLike={() => {
+              let clone = [...feedList];
+              let clone2 = {...clone[index]};
+              clone2.isLike = !clone2.isLike;
+              clone[index] = clone2;
+              setFeedList(clone);
+              
+              <Icon style = {styles.Icon} name= {liked ? 'heart' : 'ios-heart-outline'}/> 
+
+              console.log('asdaa');
+
             }}
+            navigation = {navigation}
           />
+        )}
+        onEndReached={() => {
+          setFeedList([...feedList, ...DATAS]);
+        }}
+        onEndReachedThreshold={0.7}
+      />       
+
         </View>
       );
     };
@@ -422,3 +274,42 @@
       });
 
     export default ProfileScreen;
+    const DATAS = [
+      {
+        name: 'Kmnsoo',
+        content:
+          '내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용',
+        images: [
+          {
+            url: 'https://via.placeholder.com/300',
+          },
+          {
+            url: 'https://via.placeholder.com/200',
+          },
+        ],
+        isLike: false,
+      },
+      {
+        name: '두번째',
+        content:
+          '내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용',
+        images: [
+          {
+            url: 'https://via.placeholder.com/300',
+          },
+        ],
+        isLike: true,
+      },
+      {
+        name: '세번째',
+        content:
+          '내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용',
+        images: [
+          {
+            url: 'https://via.placeholder.com/300',
+          },
+        ],
+        isLike: false,
+      },
+    ];
+    

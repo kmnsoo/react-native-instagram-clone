@@ -3,10 +3,7 @@ import {useState} from 'react';
 import {View, Pressable, Text, Dimensions, Image, StyleSheet, Alert} from 'react-native';
 import Carousel, {Pagination} from 'react-native-snap-carousel';
 import Icon from 'react-native-vector-icons/Ionicons';
-import Header from '../header/Header';
-import Profile from '../Profile/ProfileScreen';
-import TabNavigation from '../tab/TabNavigation';
-
+import GlobalStyle from '../utils/GlobalStyle';
 
 const Feed = ({ data, onPressIsLike, navigation}) => {
   const [activeSlide, setActiveSlide] = useState(0);
@@ -15,28 +12,10 @@ const Feed = ({ data, onPressIsLike, navigation}) => {
   const [bookmarked, setBookmarked] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
 
-  const createThreeButtonAlert = () =>
-  Alert.alert(
-    "Alert Title",
-    "My Alert Msg",
-    [
-      {
-        text: "Ask me later",
-        onPress: () => console.log("Ask me later pressed")
-      },
-      {
-        text: "Cancel",
-        onPress: () => console.log("Cancel Pressed"),
-        style: "cancel"
-      },
-      { text: "OK", onPress: () => console.log("OK Pressed") }
-    ]
-  );
-
   return (
     <View style={{backgroundColor: 'white'}}>
-      {/*  */}
-      
+
+     {/*  */}
       <View
         style={{
           flexDirection: 'row',
@@ -44,17 +23,17 @@ const Feed = ({ data, onPressIsLike, navigation}) => {
           padding: 8,
           paddingLeft: 16,
           paddingRight: 16,
-         
         }}>
-        <View
-          style={{
-            width: 32,
-            height: 32,
-            borderRadius: 32,
-            backgroundColor: 'lightgray',
-            marginRight: 8,
-          }}
-        />
+
+        <View>
+        <Image 
+        style = {{  width: 40,
+          height: 40,
+          borderRadius: 60,
+        }}
+        source = {require('../header/hg.jpg')}
+        />      
+        </View>
       
       <Pressable       
         style={{flexGrow: 1, flexShrink: 1, justifyContent: 'center', }}
@@ -62,21 +41,19 @@ const Feed = ({ data, onPressIsLike, navigation}) => {
             navigation.navigate('My');
             console.log('작성자 프로필로 가기');
           }}>
-          <Text>{data.name}</Text>
+          <Text style ={{paddingLeft: 5}}>{data.name}</Text>
         </Pressable>
         
-        <Pressable
+     <Pressable
         style={styles.button} 
           onPress={() => {
-            {createThreeButtonAlert}
+            navigation.navigate('My');
             console.log('모달 띄우기');
             setModalVisible(true);
-
-          }}
-         >
-           <Icon style = {styles.Icon} name='ellipsis-horizontal' size={25}/>
-        </Pressable>
-      </View>
+          }}>
+        <Icon style = {styles.Icon} name='ellipsis-horizontal' size={25}/>
+      </Pressable>
+     </View>
       
       {/*  */}
       <View
@@ -127,13 +104,13 @@ const Feed = ({ data, onPressIsLike, navigation}) => {
         }}
       />
       {/*  */}
-      <View
-        style={{
-          flexDirection: 'row',
-          padding: 8,
-          paddingLeft: 16,
-          paddingRight: 16,
-          
+
+    <View
+      style={{
+        flexDirection: 'row',
+        padding: 8,
+        paddingLeft: 16,
+        paddingRight: 16,          
         }}>
     <View>
      <Pressable
@@ -143,7 +120,6 @@ const Feed = ({ data, onPressIsLike, navigation}) => {
       </Pressable>
      </View>
 
-
         {[1].map((inItem, index) => {
           return (
             <View>
@@ -151,20 +127,13 @@ const Feed = ({ data, onPressIsLike, navigation}) => {
             style={{marginRight: 8}}
             onPress={() => {
               console.log('댓글 남기기');
-            }}>
-              {/* <View
-                style={{
-                  width: 24,
-                  height: 24,
-                  backgroundColor: 'black',
-                }}
-              /> */}
+            }}>       
        <Icon style = {styles.Icon} name='ios-chatbubble-outline' size={25}/>
-
             </Pressable>
             </View>
           );
         })}
+
         {[2].map((inItem, index) => {
           return (
             <View>
@@ -175,20 +144,13 @@ const Feed = ({ data, onPressIsLike, navigation}) => {
               console.log('DM보내기');
               navigation.navigate('DMScreen');
             }}>
-              {/* <View
-                style={{
-                  width: 24,
-                  height: 24,
-                  backgroundColor: 'grey',
-                }}
-              /> */}
            <Icon style = {styles.Icon} name='ios-paper-plane-outline' size={25}/>
-
             </Pressable>
             </View>
             </View>
           );
         })}
+
         <View style={{flexGrow: 1, flexShrink: 1, alignItems: 'center'}}>
           <Pagination
             dotsLength={data.images.length}

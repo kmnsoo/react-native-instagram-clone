@@ -9,18 +9,18 @@ import {
   TextInput,
   FlatList,
   Dimensions,
-  AsyncStorage,
   Image,
   ScrollView,
 } from 'react-native';
 import {useEffect} from 'react/cjs/react.development';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const SearchScreen = ({navigation}) => {
   const isFocused = useIsFocused();
   const [tempFeedList, setTempFeedList] = useState([]);
   const [splitList, setSpliList] = useState([]);
 
-  useEffect(async () => {
+  useEffect( async () => {
     if (isFocused) {
       let data = await AsyncStorage.getItem('feedData');
       data = JSON.parse(data);
