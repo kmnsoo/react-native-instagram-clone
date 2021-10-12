@@ -3,6 +3,7 @@ import {View, StyleSheet, Image, Text, TextInput, Alert, Button}  from 'react-na
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import CustomButton from './CustomButton';
 import GlobalStyle from '../utils/GlobalStyle';
+import AppNavigation from '../AppNavigation';
 
 
 export default function Login({navigation}) {
@@ -37,7 +38,7 @@ export default function Login({navigation}) {
                     Password: password
                 }
                 await AsyncStorage.setItem('UserData', JSON.stringify(user));
-                navigation.navigate('Home');
+                navigation.navigate('MainScreen');
             } catch (error) {
                 console.log(error);
             }

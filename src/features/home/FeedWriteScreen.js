@@ -1,10 +1,32 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {Pressable, SafeAreaView, Text, TextInput, View} from 'react-native';
 import Header from '../header/Header';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {withNavigation} from 'react-navigation'
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 const FeedWriteScreen = ({navigation}) => {
   const [content, setContent] = useState('');
+ 
+  const [name, setName] = useState('');
+
+ useEffect(() => {
+     getData();
+ }, []);
+
+ const getData = () => {
+     try {
+         AsyncStorage.getItem('UserData')
+             .then(value => {
+                 if (value != null) {
+                     let user = JSON.parse(value);
+                     setName(user.Name);
+                 }
+             })
+     } catch (error) {
+         console.log(error);
+     }
+ }
 
   return (
     <View style={{flex: 1, backgroundColor: 'white'}}>
@@ -33,7 +55,7 @@ const FeedWriteScreen = ({navigation}) => {
                 // screen: 'My',
                 params: {
                   newFeed: {
-                    name: '정현구 ㅄ',
+                    name: name,
                     content: content,
                     images: [
                       {                     
