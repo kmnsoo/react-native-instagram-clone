@@ -1,9 +1,33 @@
-import React from 'react';
 import {View, Pressable, Text, SafeAreaView, StyleSheet} from 'react-native';
 import Header from '../header/Header';
 import Icon from 'react-native-vector-icons/Ionicons';
+import React, {useState, useEffect} from 'react';
+
+
 
 const LikeScreen = ({navigation}) => {
+
+  const [name, setName] = useState('');
+  const [password, setAge] = useState('');
+
+    useEffect(() => {
+      getData();
+  }, []);
+
+const getData = () => {
+  try {
+      AsyncStorage.getItem('UserData')
+          .then(value => {
+              if (value != null) {
+                  let user = JSON.parse(value);
+                  setName(user.Name);
+                  setAge(user.password);
+              }
+          })
+  } catch (error) {
+      console.log(error);
+  }
+}
 
   return (
     <View style={{ flex: 1, }}>

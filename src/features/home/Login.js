@@ -20,7 +20,7 @@ export default function Login({navigation}) {
             AsyncStorage.getItem('UserData')
                 .then(value => {
                     if (value != null) {
-                        // navigation.navigate('Home');
+                        navigation.navigate('MainScreen');
                     }
                 })
         } catch (error) {
@@ -51,7 +51,7 @@ export default function Login({navigation}) {
                 GlobalStyle.CustomFont,
                 styles.text
             ]}>
-            Fucking Instagram </Text>
+           Welcome    Minstagram </Text>
         <TextInput
             style = {styles.input}
             placeholder = 'Enter Your Name'

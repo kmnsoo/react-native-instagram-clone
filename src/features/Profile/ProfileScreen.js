@@ -165,7 +165,7 @@
             style = {{  width: 70,
               height: 70,
               borderRadius: 60,}}
-            source = {require('../header/hg.jpg')}
+            source = {require('../header/kmnsoo.jpg')}
             />      
            </View>  
 

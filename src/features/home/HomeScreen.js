@@ -80,7 +80,7 @@ const getData = () => {
                 GlobalStyle.CustomFont,
                 styles.text
             ]}>
-              Instagram</Text>
+              Minstagram</Text>
              </View>
     );
   };
@@ -206,8 +206,10 @@ const styles = StyleSheet.create({
 export default HomeScreen;
 
 const DATAS = [
+
+
   {
-    name: 'Kmnsoo',
+    name: 'kmnsoo',
     content:
       '내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용',
     images: [
@@ -220,17 +222,17 @@ const DATAS = [
     ],
     isLike: false,
   },
-  {
-    name: '두번째',
-    content:
-      '내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용',
-    images: [
-      {
-        url: 'https://via.placeholder.com/300',
-      },
-    ],
-    isLike: true,
-  },
+  // {
+  //   name: '두번째',
+  //   content:
+  //     '내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용',
+  //   images: [
+  //     {
+  //       url: 'https://via.placeholder.com/300',
+  //     },
+  //   ],
+  //   isLike: true,
+  // },
   {
     name: '세번째',
     content:
@@ -243,3 +245,4 @@ const DATAS = [
     isLike: false,
   },
 ];
+

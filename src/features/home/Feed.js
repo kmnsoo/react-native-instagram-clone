@@ -31,7 +31,7 @@ const Feed = ({ data, onPressIsLike, navigation}) => {
           height: 40,
           borderRadius: 60,
         }}
-        source = {require('../header/hg.jpg')}
+        source = {require('../header/kmnsoo.jpg')}
         />      
         </View>
       
@@ -115,7 +115,7 @@ const Feed = ({ data, onPressIsLike, navigation}) => {
     <View>
      <Pressable
          style={{marginRight: 8}}
-         onPress = {() => setLiked((isLiked)  => ! isLiked)}>
+         onPress = {() => setLiked((isLiked)  => ! isLiked)} >
       <Icon style = {styles.Icon} name= {liked ? 'heart' : 'ios-heart-outline'} size={25}/> 
       </Pressable>
      </View>

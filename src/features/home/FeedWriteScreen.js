@@ -6,15 +6,17 @@ import {withNavigation} from 'react-navigation'
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const FeedWriteScreen = ({navigation}) => {
+
   const [content, setContent] = useState('');
  
+  //새 게시물에 사용자 name 들어가는 부분
   const [name, setName] = useState('');
 
- useEffect(() => {
-     getData();
- }, []);
+     useEffect(() => {
+         getData();
+     }, []);
 
- const getData = () => {
+  const getData = () => {
      try {
          AsyncStorage.getItem('UserData')
              .then(value => {
@@ -24,9 +26,10 @@ const FeedWriteScreen = ({navigation}) => {
                  }
              })
      } catch (error) {
-         console.log(error);
+         console.log(error);  
      }
- }
+  }
+  //
 
   return (
     <View style={{flex: 1, backgroundColor: 'white'}}>
@@ -59,7 +62,7 @@ const FeedWriteScreen = ({navigation}) => {
                     content: content,
                     images: [
                       {                     
-                        url: 'https://ifh.cc/g/eSlPew.jpg',
+                        url: 'https://ifh.cc/g/mFaQid.jpg',
                       },
                       {
                         url: 'https://ifh.cc/g/29KvKf.jpg',

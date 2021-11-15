@@ -21,13 +21,13 @@ const AppNavigation = () => {
       <Stack.Navigator  screenOptions={{headerShown: false}}>
       <Stack.Screen name="Login" component={Login} options={{headerShown: false, }}/>
       <Stack.Screen name="Home" component={HomeScreen} />
-        <Stack.Screen name="MainScreen" component={TabNavigation} />
-        <Stack.Screen name="Feed" component={Feed} />
-        <Stack.Screen name="FeedWriteScreen" component={FeedWriteScreen} />
-        <Stack.Screen name="LikeScreen" component={LikeScreen} />
-        <Stack.Screen name="DMScreen" component={DMScreen} />
-        <Stack.Screen name="DMWriteScreen" component={DMWriteScreen} />
-        <Stack.Screen name="Setting" component={SettingScreen} />
+      <Stack.Screen name="MainScreen" component={TabNavigation} />
+      <Stack.Screen name="Feed" component={Feed} />
+      <Stack.Screen name="FeedWriteScreen" component={FeedWriteScreen} />
+      <Stack.Screen name="LikeScreen" component={LikeScreen} />
+      <Stack.Screen name="DMScreen" component={DMScreen} />
+      <Stack.Screen name="DMWriteScreen" component={DMWriteScreen} />
+      <Stack.Screen name="Setting" component={SettingScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );
